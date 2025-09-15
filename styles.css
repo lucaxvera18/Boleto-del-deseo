@@ -195,8 +195,8 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    height: 150px;
+    /* FIX: Aumenta la altura del contenedor para que quepa todo el ticket */
+    height: 250px;
     margin-top: 10px;
     position: relative;
     overflow: hidden;
@@ -208,7 +208,6 @@ body {
     background-color: var(--pp-paper);
     border: 2px solid var(--pp-outline);
     position: absolute;
-    /* FIX: Posición inicial del ticket para que salga de la impresora */
     top: -100px;
     left: 50%;
     transform: translateX(-50%);
@@ -220,20 +219,16 @@ body {
     gap: 8px;
     opacity: 0;
     visibility: hidden;
-    transition: all 4s ease-in-out;
+    transition: all 4s ease-out; /* Duración de la animación del boleto */
 }
 
+/* FIX: La clase 'printed' ahora solo cambia la posición y la visibilidad del ticket */
 .ticket-pp.printed {
     opacity: 1;
     visibility: visible;
-    /* FIX: La animación se hace con 'transform' */
-    transform: translateY(120px) translateX(-50%);
+    transform: translateY(180px) translateX(-50%);
 }
 
-@keyframes ticket-slide-down {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-10px); }
-}
 
 .ticket-perforation-top, .ticket-perforation-bottom {
     width: 100%;
