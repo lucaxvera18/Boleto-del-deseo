@@ -30,10 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
     greenLight.classList.add('on');
     redLight.classList.remove('on');
 
-
     const activatePrinter = async () => {
         if (isPrinting) return;
         isPrinting = true;
+
+        // Resetear el ticket para la animación
+        ticket.classList.remove('printed');
 
         // 1. Efectos iniciales (luces, palanca, sonido de inicio)
         redLight.classList.add('on');
@@ -60,16 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 printerPrintSound.play().catch(e => console.log("Error playing printer print sound:", e));
             }
             printerRollers.classList.add('active');
-            ticket.style.transition = 'none';
-            ticket.style.clipPath = 'inset(100% 0 0 0)';
-            ticket.classList.remove('printed');
-            
             printerBody.style.animation = 'printer-vibrate 0.1s infinite';
-
-            await new Promise(resolve => setTimeout(resolve, 50));
             
-            ticket.style.transition = 'clip-path 1.5s ease-out';
+            // Inicia la animación del ticket
             ticket.classList.add('printed');
+
             resolve();
         }, 500));
 
@@ -84,8 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 printerCutSound.play().catch(e => console.log("Error playing printer cut sound:", e));
             }
 
-            await new Promise(resolve => setTimeout(resolve, 300));
-            
+            // Animación final del boleto
             ticket.style.animation = 'ticket-slide-down 0.5s ease-out forwards';
             resolve();
         }, 1500));
