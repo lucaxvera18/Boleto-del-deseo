@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const activatePrinter = async () => {
-        if (isPrinting) return; // Evita múltiples impresiones
+        if (isPrinting) return;
         isPrinting = true;
 
         // 1. Efectos iniciales (luces, palanca, sonido de inicio)
@@ -56,60 +56,56 @@ document.addEventListener('DOMContentLoaded', () => {
         await new Promise(resolve => setTimeout(async () => {
             if (printerPrintSound) {
                 printerPrintSound.currentTime = 0;
-                printerPrintSound.loop = true; // El sonido de impresión se repite
+                printerPrintSound.loop = true;
                 printerPrintSound.play().catch(e => console.log("Error playing printer print sound:", e));
             }
-            printerRollers.classList.add('active'); // Activa la animación de los rodillos
-            ticket.style.transition = 'none'; // Deshabilita la transición inicial
-            ticket.style.clipPath = 'inset(100% 0 0 0)'; // Asegura que esté oculto
-            ticket.classList.remove('printed'); // Reinicia la clase
+            printerRollers.classList.add('active');
+            ticket.style.transition = 'none';
+            ticket.style.clipPath = 'inset(100% 0 0 0)';
+            ticket.classList.remove('printed');
             
-            // Pequeña vibración de la impresora
             printerBody.style.animation = 'printer-vibrate 0.1s infinite';
 
-            await new Promise(resolve => setTimeout(resolve, 50)); // Pequeño retraso antes de empezar a mostrar
+            await new Promise(resolve => setTimeout(resolve, 50));
             
-            ticket.style.transition = 'clip-path 1.5s ease-out'; // Reactiva la transición para la impresión
-            ticket.classList.add('printed'); // Inicia la animación de salida
+            ticket.style.transition = 'clip-path 1.5s ease-out';
+            ticket.classList.add('printed');
             resolve();
-        }, 500)); // Retraso para el sonido de inicio y palanca
+        }, 500));
 
         // 3. Esperar a que el boleto salga completamente + sonido de corte
         await new Promise(resolve => setTimeout(async () => {
-            if (printerPrintSound) printerPrintSound.pause(); // Detiene el sonido de impresión
-            printerRollers.classList.remove('active'); // Desactiva los rodillos
-            printerBody.style.animation = 'none'; // Detiene la vibración
+            if (printerPrintSound) printerPrintSound.pause();
+            printerRollers.classList.remove('active');
+            printerBody.style.animation = 'none';
             
             if (printerCutSound) {
                 printerCutSound.currentTime = 0;
                 printerCutSound.play().catch(e => console.log("Error playing printer cut sound:", e));
             }
 
-            await new Promise(resolve => setTimeout(resolve, 300)); // Sonido de corte
+            await new Promise(resolve => setTimeout(resolve, 300));
             
-            // Animación final del boleto
             ticket.style.animation = 'ticket-slide-down 0.5s ease-out forwards';
             resolve();
-        }, 1500)); // Duración de la animación de clip-path (1.5s)
+        }, 1500));
 
         // 4. Resetear la impresora (luces, palanca)
         await new Promise(resolve => setTimeout(() => {
             lever.classList.remove('active');
             redLight.classList.remove('on');
             greenLight.classList.add('on');
-            isPrinting = false; // Permite una nueva impresión
+            isPrinting = false;
             resolve();
-        }, 500)); // Retraso final
+        }, 500));
     };
 
-    // Event Listeners para activar la impresión
     mainContainer.addEventListener('click', activatePrinter);
     mainContainer.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Previene el zoom en móviles
+        e.preventDefault();
         activatePrinter();
     });
 
-    // Añadir animación de vibración de la impresora
     const styleSheet = document.styleSheets[0];
     styleSheet.insertRule(`
         @keyframes printer-vibrate {
