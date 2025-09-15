@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = new Date();
         const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
         const year = date.getFullYear();
-        return `${month} ${year}`;
+        return `${year} ${month}`;
     };
 
     // Inicializar la fecha
@@ -80,20 +80,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 printerCutSound.currentTime = 0;
                 printerCutSound.play().catch(e => console.log("Error playing printer cut sound:", e));
             }
-
-            // Animación final del boleto
-            ticket.style.animation = 'ticket-slide-down 0.5s ease-out forwards';
-            resolve();
-        }, 1500));
-
-        // 4. Resetear la impresora (luces, palanca)
-        await new Promise(resolve => setTimeout(() => {
-            lever.classList.remove('active');
-            redLight.classList.remove('on');
-            greenLight.classList.add('on');
-            isPrinting = false;
-            resolve();
-        }, 500));
+            
+            // Espera 1.5s para la animación de salida del ticket
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Reinicia todo después de 1 segundo
+            await new Promise(resolve => setTimeout(() => {
+                lever.classList.remove('active');
+                redLight.classList.remove('on');
+                greenLight.classList.add('on');
+                isPrinting = false;
+                resolve();
+            }, 1000));
+        }, 2000)); // Espera 2s para que la animación del ticket termine
     };
 
     mainContainer.addEventListener('click', activatePrinter);
