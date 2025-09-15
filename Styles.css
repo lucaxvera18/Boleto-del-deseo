@@ -1,0 +1,177 @@
+body {
+    background-color: #f0f0f0;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    touch-action: manipulation;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Impresora de Pixel Art --- */
+.printer {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.printer-top {
+    width: 100%;
+    height: 30%;
+    background-color: #555;
+    border: 3px solid #333;
+    border-bottom: none;
+    position: relative;
+}
+
+.printer-body {
+    width: 100%;
+    height: 70%;
+    background-color: #777;
+    border: 3px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+}
+
+.printer-input {
+    width: 80%;
+    height: 15px;
+    background-color: #555;
+    border: 2px solid #333;
+    position: absolute;
+    top: 10px;
+}
+
+.printer-paper {
+    width: 70%;
+    height: 40px;
+    background-color: #ccc;
+    border: 2px solid #999;
+    position: absolute;
+    top: 15px;
+    animation: paper-in 2s linear infinite;
+}
+
+@keyframes paper-in {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.printer-outlet {
+    width: 80%;
+    height: 10px;
+    background-color: #333;
+    position: absolute;
+    bottom: 0;
+}
+
+/* --- Animación y Estilo del Boleto --- */
+.ticket-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.ticket {
+    width: 90%;
+    height: auto;
+    background-color: #ffc;
+    border: 3px solid #333;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0 #333;
+    padding: 15px;
+    text-align: center;
+    display: none; /* Se oculta por defecto y se muestra con JS */
+    flex-direction: column;
+    gap: 10px;
+    animation: print-ticket 2s ease-in-out forwards;
+}
+
+@keyframes print-ticket {
+    0% {
+        transform: translateY(-100px) scaleY(0);
+    }
+    100% {
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+.ticket-top, .ticket-bottom {
+    border-bottom: 2px dashed #333;
+    padding-bottom: 10px;
+}
+
+.ticket-bottom {
+    border-bottom: none;
+    border-top: 2px dashed #333;
+    padding-top: 10px;
+    padding-bottom: 0;
+}
+
+.ticket-top p {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.heart {
+    font-size: 3em;
+    color: red;
+    animation: beat 1s infinite;
+}
+
+@keyframes beat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.subtitle {
+    font-size: 1.2em;
+    font-style: italic;
+    margin: 0;
+}
+
+.barcode {
+    width: 80%;
+    height: 30px;
+    background: linear-gradient(90deg, #333 10%, #fff 10%, #333 20%, #fff 20%, #333 30%, #fff 30%, #333 40%, #fff 40%, #333 50%, #fff 50%, #333 60%, #fff 60%, #333 70%, #fff 70%, #333 80%, #fff 80%, #333 90%, #fff 90%);
+    margin: 10px auto;
+}
+
+/* --- Adaptabilidad y Versión Horizontal --- */
+@media (orientation: landscape) and (min-width: 600px) {
+    .container {
+        flex-direction: row;
+        gap: 50px;
+    }
+    .printer, .ticket-container {
+        width: 45%;
+    }
+    .ticket {
+        max-width: none;
+    }
+}
