@@ -1,177 +1,340 @@
+:root {
+    --pp-dark-grey: #3c3c3c;
+    --pp-medium-grey: #5c5c5c;
+    --pp-light-grey: #8c8c8c;
+    --pp-green: #4a6c4a;
+    --pp-red: #8c4a4a;
+    --pp-paper: #c0c090; /* Papel amarillento */
+    --pp-text: #2c2c2c;
+    --pp-outline: #2c2c2c;
+}
+
 body {
-    background-color: #f0f0f0;
-    font-family: 'Courier New', Courier, monospace;
+    background-color: var(--pp-dark-grey);
+    font-family: 'Press Start 2P', cursive; /* Fuente pixelada */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     overflow: hidden;
-    position: relative;
     touch-action: manipulation;
+    color: var(--pp-text);
+    font-size: 10px; /* Tamaño base para la fuente pixelada */
 }
 
-.container {
+.main-container {
     width: 90%;
-    max-width: 400px;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-/* --- Impresora de Pixel Art --- */
-.printer {
+/* --- Impresora Estilo "Papers, Please" --- */
+.printer-container {
+    position: relative;
     width: 100%;
-    height: 180px;
+    height: 250px; /* Altura ajustada para el diseño */
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
+    margin-bottom: 20px;
 }
 
-.printer-top {
-    width: 100%;
-    height: 30%;
-    background-color: #555;
-    border: 3px solid #333;
-    border-bottom: none;
-    position: relative;
-}
-
-.printer-body {
-    width: 100%;
-    height: 70%;
-    background-color: #777;
-    border: 3px solid #333;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    position: relative;
-}
-
-.printer-input {
-    width: 80%;
-    height: 15px;
-    background-color: #555;
-    border: 2px solid #333;
-    position: absolute;
-    top: 10px;
-}
-
-.printer-paper {
-    width: 70%;
-    height: 40px;
-    background-color: #ccc;
-    border: 2px solid #999;
-    position: absolute;
-    top: 15px;
-    animation: paper-in 2s linear infinite;
-}
-
-@keyframes paper-in {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-5px);
-    }
-}
-
-.printer-outlet {
-    width: 80%;
-    height: 10px;
-    background-color: #333;
+.printer-base {
+    width: 95%;
+    height: 20px;
+    background-color: var(--pp-dark-grey);
+    border: 2px solid var(--pp-outline);
+    border-radius: 4px;
     position: absolute;
     bottom: 0;
+    box-shadow: 0 4px 0 var(--pp-outline);
 }
 
-/* --- Animación y Estilo del Boleto --- */
-.ticket-container {
+.printer-body-pp {
     width: 100%;
-    height: auto;
+    height: 200px;
+    background-color: var(--pp-medium-grey);
+    border: 2px solid var(--pp-outline);
+    border-bottom: none;
+    position: relative;
+    box-shadow: 4px 4px 0 var(--pp-outline);
+    border-radius: 4px 4px 0 0;
+    overflow: hidden; /* Para el slot de salida */
+}
+
+.printer-top-pp {
+    width: 100%;
+    height: 60px;
+    background-color: var(--pp-green);
+    border-bottom: 2px solid var(--pp-outline);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* Palanca */
+.lever-base {
+    width: 15px;
+    height: 15px;
+    background-color: var(--pp-light-grey);
+    border: 2px solid var(--pp-outline);
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    border-radius: 2px;
+}
+
+.lever {
+    width: 8px;
+    height: 30px;
+    background-color: var(--pp-medium-grey);
+    border: 2px solid var(--pp-outline);
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    transform-origin: bottom center;
+    transition: transform 0.1s ease-out;
+}
+.lever.active {
+    transform: rotate(15deg);
+}
+
+/* Luces */
+.light {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--pp-outline);
+    position: absolute;
+    top: 15px;
+}
+.red-light {
+    background-color: #880000;
+    left: 15px;
+}
+.red-light.on {
+    background-color: #ff0000;
+    box-shadow: 0 0 5px #ff0000;
+}
+.green-light {
+    background-color: #008800;
+    left: 30px;
+}
+.green-light.on {
+    background-color: #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+}
+
+/* Botones */
+.button-set {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+}
+.button-pp {
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--pp-outline);
+    border-radius: 2px;
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), inset 0 -2px 0 rgba(0,0,0,0.2);
+}
+.button-pp.red { background-color: var(--pp-red); }
+.button-pp.grey { background-color: var(--pp-light-grey); }
+.button-pp.active {
+    transform: translateY(1px);
+    box-shadow: inset 0 0px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2);
+}
+
+
+.printer-output-slot {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 30px;
+    background-color: var(--pp-dark-grey);
+    border: 2px solid var(--pp-outline);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
 }
 
-.ticket {
+.printer-rollers {
     width: 90%;
-    height: auto;
-    background-color: #ffc;
-    border: 3px solid #333;
-    border-radius: 10px;
-    box-shadow: 5px 5px 0 #333;
-    padding: 15px;
-    text-align: center;
-    display: none; /* Se oculta por defecto y se muestra con JS */
-    flex-direction: column;
-    gap: 10px;
-    animation: print-ticket 2s ease-in-out forwards;
+    height: 10px;
+    background-color: #2c2c2c;
+    border-radius: 5px;
+    position: absolute;
+    animation: roller-spin 0.5s linear infinite paused; /* Pausado por defecto */
+}
+.printer-rollers.active {
+    animation-play-state: running;
 }
 
-@keyframes print-ticket {
-    0% {
-        transform: translateY(-100px) scaleY(0);
-    }
-    100% {
-        transform: translateY(0) scaleY(1);
-    }
+@keyframes roller-spin {
+    from { background-position: 0 0; }
+    to { background-position: -20px 0; }
 }
 
-.ticket-top, .ticket-bottom {
-    border-bottom: 2px dashed #333;
-    padding-bottom: 10px;
+/* --- Boleto Estilo "Papers, Please" --- */
+.ticket-display {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alineación para que el boleto salga */
+    height: 150px; /* Altura para el boleto saliendo */
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden; /* Para recortar el boleto antes de que salga */
 }
 
-.ticket-bottom {
-    border-bottom: none;
-    border-top: 2px dashed #333;
-    padding-top: 10px;
-    padding-bottom: 0;
-}
-
-.ticket-top p {
-    font-size: 2em;
-    font-weight: bold;
-    margin: 0;
-}
-
-.heart {
-    font-size: 3em;
-    color: red;
-    animation: beat 1s infinite;
-}
-
-@keyframes beat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
-.subtitle {
-    font-size: 1.2em;
-    font-style: italic;
-    margin: 0;
-}
-
-.barcode {
+.ticket-pp {
     width: 80%;
-    height: 30px;
-    background: linear-gradient(90deg, #333 10%, #fff 10%, #333 20%, #fff 20%, #333 30%, #fff 30%, #333 40%, #fff 40%, #333 50%, #fff 50%, #333 60%, #fff 60%, #333 70%, #fff 70%, #333 80%, #fff 80%, #333 90%, #fff 90%);
-    margin: 10px auto;
+    max-width: 300px;
+    background-color: var(--pp-paper);
+    border: 2px solid var(--pp-outline);
+    position: absolute;
+    top: 100%; /* Empieza fuera de la vista */
+    transform: translateY(0);
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    clip-path: inset(100% 0 0 0); /* Oculta el boleto inicialmente */
+    transition: clip-path 1.5s ease-out;
+}
+
+.ticket-pp.printed {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(-100%); /* Ajuste final después de la salida */
+    animation: ticket-slide-down 1.5s ease-out forwards;
+}
+
+@keyframes ticket-slide-down {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); } /* Pequeño rebote */
+}
+
+
+.ticket-perforation-top, .ticket-perforation-bottom {
+    width: 100%;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, var(--pp-outline) 0 2px, transparent 2px 4px);
+    margin: -10px 0; /* Ajusta para que parezca cortado */
+}
+.ticket-perforation-bottom {
+    margin: 8px 0 -10px 0;
+}
+
+
+.ticket-title {
+    font-size: 1.2em;
+    margin: 0;
+    color: var(--pp-text);
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.1);
+}
+
+.ticket-heart {
+    font-size: 1.8em;
+    color: var(--pp-red);
+    margin: 0;
+    animation: heart-pulse 1s infinite;
+}
+
+@keyframes heart-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.barcode-pp {
+    width: 80%;
+    height: 20px;
+    background: linear-gradient(90deg, var(--pp-text) 0 4px, transparent 4px 8px, var(--pp-text) 8px 10px, transparent 10px 14px, var(--pp-text) 14px 18px, transparent 18px 20px, var(--pp-text) 20px 24px, transparent 24px 28px, var(--pp-text) 28px 30px, transparent 30px 34px, var(--pp-text) 34px 38px, transparent 38px 42px, var(--pp-text) 42px 46px, transparent 46px 50px);
+    background-size: 50px 100%; /* Ajusta el tamaño de la repetición */
+    margin: 0 auto;
+    image-rendering: pixelated;
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white"/></svg>'); /* Forcing pixelated on some browsers */
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white"/></svg>');
+}
+
+.ticket-date {
+    font-size: 0.8em;
+    margin: 5px 0;
+    color: var(--pp-text);
+}
+
+.seal-approved {
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    background-color: var(--pp-green);
+    color: #fff;
+    border: 2px solid var(--pp-outline);
+    border-radius: 4px;
+    margin: 0 auto 5px auto;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    box-shadow: 2px 2px 0 var(--pp-outline);
+    transform: rotate(-5deg); /* Pequeña inclinación */
 }
 
 /* --- Adaptabilidad y Versión Horizontal --- */
 @media (orientation: landscape) and (min-width: 600px) {
-    .container {
+    .main-container {
         flex-direction: row;
-        gap: 50px;
+        gap: 40px;
+        max-width: 800px;
+        height: 80vh;
     }
-    .printer, .ticket-container {
+    .printer-container {
         width: 45%;
+        height: 100%;
+        margin-bottom: 0;
     }
-    .ticket {
-        max-width: none;
+    .ticket-display {
+        width: 45%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0;
+    }
+    .ticket-pp {
+        transform: translateY(0); /* Ajustar para centrar en horizontal */
+    }
+    .ticket-pp.printed {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 400px) {
+    body {
+        font-size: 8px;
+    }
+    .ticket-title {
+        font-size: 1.1em;
+    }
+    .ticket-heart {
+        font-size: 1.6em;
+    }
+    .seal-approved {
+        width: 80px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 0.8em;
     }
 }
