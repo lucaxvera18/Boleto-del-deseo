@@ -34,9 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isPrinting) return;
         isPrinting = true;
 
-        // Resetear el ticket para la animación
-        ticket.classList.remove('printed');
-
         // 1. Efectos iniciales (luces, palanca, sonido de inicio)
         redLight.classList.add('on');
         greenLight.classList.remove('on');
@@ -81,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 printerCutSound.play().catch(e => console.log("Error playing printer cut sound:", e));
             }
             
-            // Espera 1.5s para la animación de salida del ticket
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Espera para el tiempo de visualización del ticket (7 segundos)
+            await new Promise(resolve => setTimeout(resolve, 7000));
             
             // Reinicia todo después de 1 segundo
             await new Promise(resolve => setTimeout(() => {
@@ -90,9 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 redLight.classList.remove('on');
                 greenLight.classList.add('on');
                 isPrinting = false;
+                // Oculta el ticket para la próxima impresión
+                ticket.classList.remove('printed');
                 resolve();
             }, 1000));
-        }, 2000)); // Espera 2s para que la animación del ticket termine
+        }, 2000));
     };
 
     mainContainer.addEventListener('click', activatePrinter);
