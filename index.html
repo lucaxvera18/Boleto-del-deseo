@@ -5,35 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Tienes un regalo! ❤️</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <div class="printer">
-            <div class="printer-top"></div>
-            <div class="printer-body">
-                <div class="printer-input"></div>
-                <div class="printer-paper"></div>
+    <div class="main-container">
+        <div class="printer-container">
+            <div class="printer-base"></div>
+            <div class="printer-body-pp">
+                <div class="printer-top-pp">
+                    <div class="lever-base"></div>
+                    <div class="lever"></div>
+                    <div class="light red-light"></div>
+                    <div class="light green-light"></div>
+                    <div class="button-set">
+                        <div class="button-pp red"></div>
+                        <div class="button-pp grey"></div>
+                        <div class="button-pp red"></div>
+                        <div class="button-pp grey"></div>
+                    </div>
+                </div>
+                <div class="printer-output-slot">
+                    <div class="printer-rollers"></div>
+                </div>
             </div>
-            <div class="printer-outlet"></div>
         </div>
 
-        <div class="ticket-container">
-            <div class="ticket">
-                <div class="ticket-top">
-                    <p>VALE UN REGALO</p>
-                    <p class="heart">❤️</p>
-                </div>
-                <div class="ticket-middle">
-                    <p class="subtitle">¡Válido solo por una vez!</p>
-                    <div class="barcode"></div>
-                </div>
-                <div class="ticket-bottom">
-                    <p>¡Gracias por jugar!</p>
-                </div>
+        <div class="ticket-display">
+            <div class="ticket-pp">
+                <div class="ticket-perforation-top"></div>
+                <p class="ticket-title">VALE UN REGALO</p>
+                <p class="ticket-heart">❤️</p>
+                <div class="barcode-pp"></div>
+                <p class="ticket-date" id="ticket-date"></p>
+                <div class="seal-approved">APROBADO</div>
+                <div class="ticket-perforation-bottom"></div>
             </div>
         </div>
     </div>
+
+    <audio id="printerStartSound" src="printer_start.mp3" preload="auto"></audio>
+    <audio id="printerPrintSound" src="printer_print.mp3" preload="auto"></audio>
+    <audio id="printerCutSound" src="printer_cut.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>
